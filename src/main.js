@@ -1,22 +1,36 @@
-const http = require('http');
+const express = require('express');
+const app = express();
+const port = 3000;
 
-const sever = http.createServer((request, response) => {
-  const data = {
-    id: 1,
-    title: '关山月',
-    content: '明月出天山，苍茫云海间'
-  }
-
-  const jsonData = JSON.stringify(data);
-
-  response.writeHead(200, {
-    'Content-Type': 'application/json; charset=utf-8'
-  });
-  response.write(jsonData);
-
-  response.end();
+app.listen(port, () => {
+  console.log('服务已启动！');
 });
 
-sever.listen(3000, () => {
-  console.log('服务已启动！');
-})
+const data = [
+  {
+    id: 1,
+    title: '静夜思',
+    content: '床前明月光，举头望明月'
+  },
+  {
+    id: 2,
+    title: '春晓',
+    content: '春眠不觉晓，处处闻啼鸟'
+  },
+  {
+    id: 3,
+    title: '乐游原',
+    content: '向晚意不适，驱车登古原'
+  }
+];
+
+app.get('/posts/:postId', (request, response) => {
+  const { postId } = request.params;
+  const posts = data.filter(item => item.id == postId);
+
+  response.send(posts[0]);
+  
+  console.log(request.params);
+  console.log(request.params.postId);
+  console.log(typeof request.params);
+});
