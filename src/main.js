@@ -28,7 +28,7 @@ const data = [
 ];
 app.get('/posts', (request, response) => {
   response.send(data);
-  console.log(typeof data);
+  // console.log(typeof data);
 });
 
 app.get('/posts/:postId', (request, response) => {
@@ -37,7 +37,16 @@ app.get('/posts/:postId', (request, response) => {
 
   response.send(posts[0]);
   
-  console.log(request.params);
-  console.log(request.params.postId);
-  console.log(typeof request.params);
+  // console.log(request.params);
+  // console.log(request.params.postId);
+  // console.log(typeof request.params);
 });
+
+app.post('/posts', (request, response) => {
+  const { content } = request.body;
+
+  response.send({
+    message: `成功建立了内容： ${content}`
+  });
+});
+
