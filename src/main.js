@@ -47,6 +47,8 @@ app.post('/posts', (request, response) => {
 
   response.status(201);
 
+  console.log(request.headers['sing-along']);
+
   response.send({
     message: `成功建立了内容： ${content}`
   });
