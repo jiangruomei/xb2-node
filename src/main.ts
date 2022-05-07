@@ -4,7 +4,6 @@ import { Request, Response } from 'express';
 const app = express();
 const port = 3000;
 
-
 app.use(express.json());
 
 app.listen(port, () => {
@@ -15,18 +14,18 @@ const data = [
   {
     id: 1,
     title: '静夜思',
-    content: '床前明月光，举头望明月'
+    content: '床前明月光，举头望明月',
   },
   {
     id: 2,
     title: '春晓',
-    content: '春眠不觉晓，处处闻啼鸟'
+    content: '春眠不觉晓，处处闻啼鸟',
   },
   {
     id: 3,
     title: '乐游原',
-    content: '向晚意不适，驱车登古原'
-  }
+    content: '向晚意不适，驱车登古原',
+  },
 ];
 app.get('/posts', (request: Request, response: Response) => {
   response.send(data);
@@ -38,23 +37,26 @@ app.get('/posts/:postId', (request: Request, response: Response) => {
   const posts = data.filter(item => item.id == parseInt(postId, 10));
 
   response.send(posts[0]);
-  
+
   // console.log(request.params);
   // console.log(request.params.postId);
   // console.log(typeof request.params);
 });
 
-app.post('/posts', (request: Request, response: Response) => {
-  const { content } = request.body;
+app.post(
+  '/posts',
 
-  response.status(201);
+  (request: Request, response: Response) => {
+    const { content } = request.body;
 
-  console.log(request.headers['sing-along']);
+    response.status(201);
 
-  response.set('Sing-Along', 'How I wonder what you are!');
+    console.log(request.headers['sing-along']);
 
-  response.send({
-    message: `成功建立了内容： ${content}`
-  });
-});
+    response.set('Sing-Along', 'How I wonder what you are!');
 
+    response.send({
+      message: `成功建立了内容： ${content}`,
+    });
+  },
+);
