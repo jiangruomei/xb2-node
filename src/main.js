@@ -45,6 +45,8 @@ app.get('/posts/:postId', (request, response) => {
 app.post('/posts', (request, response) => {
   const { content } = request.body;
 
+  response.status(201);
+
   response.send({
     message: `成功建立了内容： ${content}`
   });
