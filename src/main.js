@@ -2,6 +2,9 @@ const express = require('express');
 const app = express();
 const port = 3000;
 
+
+app.use(express.json());
+
 app.listen(port, () => {
   console.log('服务已启动！');
 });
@@ -23,6 +26,10 @@ const data = [
     content: '向晚意不适，驱车登古原'
   }
 ];
+app.get('/posts', (request, response) => {
+  response.send(data);
+  console.log(typeof data);
+});
 
 app.get('/posts/:postId', (request, response) => {
   const { postId } = request.params;
