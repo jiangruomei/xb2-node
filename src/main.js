@@ -49,6 +49,8 @@ app.post('/posts', (request, response) => {
 
   console.log(request.headers['sing-along']);
 
+  response.set('Sing-Along', 'How I wonder what you are!');
+
   response.send({
     message: `成功建立了内容： ${content}`
   });
