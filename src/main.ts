@@ -1,5 +1,6 @@
 // const express = require('express');
 import express from 'express';
+import { Request, Response } from 'express';
 const app = express();
 const port = 3000;
 
@@ -27,12 +28,12 @@ const data = [
     content: '向晚意不适，驱车登古原'
   }
 ];
-app.get('/posts', (request, response) => {
+app.get('/posts', (request: Request, response: Response) => {
   response.send(data);
   // console.log(typeof data);
 });
 
-app.get('/posts/:postId', (request, response) => {
+app.get('/posts/:postId', (request: Request, response: Response) => {
   const { postId } = request.params;
   const posts = data.filter(item => item.id == postId);
 
@@ -43,7 +44,7 @@ app.get('/posts/:postId', (request, response) => {
   // console.log(typeof request.params);
 });
 
-app.post('/posts', (request, response) => {
+app.post('/posts', (request: Request, response: Response) => {
   const { content } = request.body;
 
   response.status(201);
