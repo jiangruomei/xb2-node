@@ -1,9 +1,9 @@
-import {Request, Response, NextFunction} from 'express';
+import { Request, Response, NextFunction } from 'express';
 
 export const requestUrl = (
   request: Request,
   response: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   console.log(request.url);
   next();
@@ -13,7 +13,7 @@ export const defaultErrorHandler = (
   error: any,
   request: Request,
   response: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   let statusCode: number, message: string;
 
