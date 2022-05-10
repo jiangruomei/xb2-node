@@ -15,8 +15,10 @@ export const defaultErrorHandler = (
   response: Response,
   next: NextFunction,
 ) => {
+  if (error.message) {
+    console.log('数据服务出现故障：', error.message);
+  }
   let statusCode: number, message: string;
-  console.log(error.message);
 
   switch (error.message) {
     default:
