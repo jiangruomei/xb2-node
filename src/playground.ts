@@ -1,8 +1,14 @@
-const nature = callback => {
-  const data = '1';
-  callback(data);
+const nature = () => {
+  console.log('1');
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve('2');
+    }, 2000);
+  });
 };
 
-nature(data => {
+nature().then(data => {
   console.log(data);
 });
+
+console.log('3');
