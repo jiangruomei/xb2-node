@@ -37,3 +37,12 @@ export const updatePost = async (postId: number, post: PostModel) => {
   const [data] = await connection.promise().query(statement, [post, postId]);
   return data;
 };
+
+export const deletePost = async (postId: number) => {
+  const statement = `
+    DELETE FROM post
+    WHERE id = ?
+  `;
+  const [data] = await connection.promise().query(statement, postId);
+  return data;
+};
