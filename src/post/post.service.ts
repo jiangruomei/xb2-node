@@ -27,3 +27,13 @@ export const createPost = async (post: PostModel) => {
   const [data] = await connection.promise().query(statement, post);
   return data;
 };
+
+export const updatePost = async (postId: number, post: PostModel) => {
+  const statement = `
+    UPDATE post
+    SET ?
+    WHERE id = ?
+  `;
+  const [data] = await connection.promise().query(statement, [post, postId]);
+  return data;
+};
