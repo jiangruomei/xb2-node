@@ -16,6 +16,7 @@ export const defaultErrorHandler = (
   next: NextFunction,
 ) => {
   let statusCode: number, message: string;
+  console.log(error.message);
 
   switch (error.message) {
     default:
