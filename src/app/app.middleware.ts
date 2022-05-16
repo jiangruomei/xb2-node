@@ -45,6 +45,10 @@ export const defaultErrorHandler = (
       statusCode = 401;
       message = '请先登陆';
       break;
+    case 'USER_DOES_NOT_OWN_RESOURCE':
+      statusCode = 409;
+      message = '您无权处理该内容';
+      break;
     default:
       statusCode = 500;
       message = '服务暂时出了点问题 ~';

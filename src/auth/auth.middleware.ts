@@ -4,6 +4,7 @@ import bcrypt from 'bcrypt';
 import * as userService from '../user/user.service';
 import { PUBLIC_KEY } from '../app/app.config';
 import { TokenPayload } from './auth.interface';
+import { poccess } from './auth.service';
 
 export const validateLoginData = async (
   request: Request,
@@ -46,4 +47,33 @@ export const authGuard = (
   } catch (error) {
     next(new Error('UNAUTHORIZED'));
   }
+};
+
+interface AccessControlOptions {
+  possession?: boolean;
+}
+
+export const accessControl = (options: AccessControlOptions) => {
+  return async (request: Request, response: Response, next: NextFunction) => {
+    console.log('访问控制');
+    const { possession } = options;
+    const { id: userId } = request.user;
+
+    if (userId == 1) return next();
+    // console.log('resource:', request.params, Object.keys(request.params));
+    const resourceIdParam = Object.keys(request.params)[0];
+    const resourceType = resourceIdParam.replace('Id', '');
+    const resourceId = parseInt(request.params[resourceIdParam], 10);
+    if (possession) {
+      try {
+        const ownResource = await poccess({ resourceId, resourceType, userId });
+        if (!ownResource) {
+          return next(new Error('USER_DOES_NOT_OWN_RESOURCE'));
+        }
+      } catch (error) {
+        next(error);
+      }
+    }
+    next();
+  };
 };
