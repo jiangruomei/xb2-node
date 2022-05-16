@@ -10,6 +10,8 @@ export const store = async (
   response: Response,
   next: NextFunction,
 ) => {
+  // console.log(request.file);
+  // response.sendStatus(200);
   // 当前用户
   const { id: userId } = request.user;
 
@@ -54,13 +56,9 @@ export const serve = async (
     // 查找文件信息
     const file = await findFileById(parseInt(fileId, 10));
 
-    // 文件名与目录
-    let filename = file.filename;
-    let root = 'uploads';
-
     // 做出响应
-    response.sendFile(filename, {
-      root,
+    response.sendFile(file.filename, {
+      root: 'uploads',
       headers: {
         'Content-Type': file.mimetype,
       },
