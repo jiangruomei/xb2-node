@@ -22,5 +22,21 @@ router.delete(
   accessControl({ possession: true }),
   postController.destroy,
 );
+//添加内容标签
+router.post(
+  '/posts/:postId/tag',
+  authGuard,
+  accessControl({ possession: true }),
+  postController.storePostTag,
+);
 
+//移除内容标签
+router.delete(
+  '/posts/:postId/tag',
+  authGuard,
+  accessControl({ possession: true }),
+  postController.destroyPostTag,
+);
+
+//导出路由
 export default router;
