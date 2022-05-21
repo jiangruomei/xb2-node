@@ -8,6 +8,7 @@ import {
   postHasTag,
   createPostTag,
   deletePostTag,
+  getPostsTotalCount,
 } from './post.service';
 import { TagModel } from '../tag/tag.model';
 import { createTag, getTagByName } from '../tag/tag.service';
@@ -18,8 +19,21 @@ export const index = async (
   next: NextFunction,
 ) => {
   try {
-    const data = await getPosts({ sort: request.sort, filter: request.filter });
-    response.send(data);
+    // 统计内容数量
+    const totalCount = await getPostsTotalCount({ filter: request.filter });
+    // 设置响应头部
+    response.header('X-Total-Count', totalCount);
+  } catch (error) {
+    next(error);
+  }
+
+  try {
+    const posts = await getPosts({
+      sort: request.sort,
+      filter: request.filter,
+      pagination: request.pagination,
+    });
+    response.send(posts);
   } catch (error) {
     next(error);
   }
