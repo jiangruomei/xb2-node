@@ -51,6 +51,8 @@ export const serve = async (
     // 查找头像信息
     const avatar = await findAvatarByUserId(parseInt(userId, 10));
 
+    // console.log('avatar:', avatar);
+
     if (!avatar) {
       throw new Error('FILE_NOT_FOUND');
     }
@@ -76,6 +78,8 @@ export const serve = async (
       const fileExist = fs.existsSync(
         path.join(root, resized, `${filename}-${size}`),
       );
+
+      // console.log('root:', root, 'fileExist', fileExist);
 
       if (!fileExist) {
         throw new Error('FILE_NOT_FOUND');
