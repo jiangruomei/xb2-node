@@ -4,6 +4,9 @@ import {
   deleteComment,
   isReplayComment,
   updateComment,
+  getComments,
+  getCommentsTotalCount,
+  getCommentReplies,
 } from './comment.service';
 
 /**
@@ -105,6 +108,50 @@ export const destroy = async (
   try {
     const data = await deleteComment(parseInt(commentId, 10));
     response.send(data);
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * 评论列表
+ */
+export const index = async (
+  request: Request,
+  response: Response,
+  next: NextFunction,
+) => {
+  try {
+    const totalCount = await getCommentsTotalCount({ filter: request.filter });
+    response.header('X-Total-Count', totalCount);
+  } catch (error) {
+    next(error);
+  }
+  try {
+    const comments = await getComments({
+      filter: request.filter,
+      pagination: request.pagination,
+    });
+    response.send(comments);
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * 回复列表
+ */
+export const indexReplies = async (
+  request: Request,
+  response: Response,
+  next: NextFunction,
+) => {
+  const { commentId } = request.params;
+  try {
+    const replies = await getCommentReplies({
+      commentId: parseInt(commentId, 10),
+    });
+    response.send(replies);
   } catch (error) {
     next(error);
   }
