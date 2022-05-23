@@ -23,11 +23,11 @@ export const defaultErrorHandler = (
   switch (error.message) {
     case 'NAME_IS_REQUIRED':
       statusCode = 400;
-      message = '请输入用户名';
+      message = '请提供用户名';
       break;
     case 'PASSWORD_IS_REQUIRED':
       statusCode = 400;
-      message = '请输入用户密码';
+      message = '请提供用户密码';
       break;
     case 'USER_ALREADY_EXIST':
       statusCode = 409;
